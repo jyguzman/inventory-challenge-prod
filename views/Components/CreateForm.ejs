@@ -4,7 +4,7 @@
         document.querySelector('#jsonCreate').innerHTML = '';
     }
 
-    const createItem = async () =>{
+    const createItem = async () => {
         document.querySelector('#result').innerHTML = "";
         document.querySelector('#jsonCreate').innerHTML = '';
 
@@ -47,7 +47,15 @@
             </tr>
             <tr>
                 <td>City</td>
-                <td><input id="city"></input></td>
+                <td>
+                    <select id="city">
+                        <option value="Seattle, US">Seattle, WA, US</option>
+                        <option value="Ottawa, CA">Ottawa, ON, CA</option>
+                        <option value="Atlanta, US">Atlanta, GA, US</option>
+                        <option value="Boston, US">Boston, MA, US</option>
+                        <option value="Austin, US">Austin, TX, US</option>
+                    </select>
+                </td>
             </tr>
         </table>
         <div>

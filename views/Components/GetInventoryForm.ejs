@@ -1,17 +1,35 @@
 <script>
+    const retrieveWeatherData = async (city) => {
+        let response = await fetch(`/weather?city=${city}`, {
+            method: "GET",
+            headers: {'Content-Type': 'application/json'}
+        });
+        response = await response.json();
+        return response;
+    }
     const getInventory = async () => {
         document.querySelector('#message').innerHTML = '';
         document.querySelector('#jsonInventory').innerHTML = '';
 
-        const response = await fetch('/items', {
+        let items = await fetch('/items', {
             method: "GET",
             headers: {'Content-Type': 'application/json'}
         })
 
-        const json = await response.json();
-        document.querySelector('#message').innerHTML = json.message;
+        items = await items.json();
+
+        for (let i = 0; i < items.data.length; i++) {
+            const item = items.data[i];
+            const weatherData = await retrieveWeatherData(item.city);
+            if (!("data") in weatherData) {
+                item['weather'] = weatherData.message;
+            }
+            item['weather'] = weatherData.data;
+        }
+
+        document.querySelector('#message').innerHTML = items.message;
         document.querySelector('#jsonInventory').innerHTML = 
-           json.data.length > 0 ? JSON.stringify((json.data), null, 4) : "No items in inventory.";
+            items.data.length > 0 ? JSON.stringify((items.data), null, 4) : "No items in inventory.";
     }
     const clearMessage = () => {
         document.querySelector('#message').innerHTML = '';

@@ -1,11 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 const ejs = require('ejs');
 const sqlite3 = require('sqlite3');
+const axios = require('axios')
 const cors = require('cors');
 const inventoryDB = new sqlite3.Database('inventory.db');
 const { isValidItem, isValidNumberInput } = require('../utils/input_validation_functions');
 const { urlencoded } = require('body-parser');
 const db_queries = require('../utils/db_queries');
+const { send } = require('express/lib/response');
 const sendResponse = require('../controllers/controller').sendResponse;
 const inventoryAPI = express();
 inventoryAPI.use(cors());
@@ -162,6 +165,18 @@ inventoryAPI.delete('/delete-all', async (req, res) => {
         return;
     }
     sendResponse(res, 200, {message: "Successfully deleted all data."});
+})
+
+inventoryAPI.get('/weather', async (req, res) => {
+    const city = req.query.city;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${process.env.API_KEY}`;
+    const response = await axios.get(url);
+    const data = response.data;
+    if (parseInt(data.cod) === 404) {
+        sendResponse(res, 404, {message: "No weather data: city was not found."});
+        response;
+    }
+    sendResponse(res, 200, {message: "Successfully retrieved weather data", city: city, data: data.weather[0].description})
 })
 
 inventoryAPI.all('*', (req, res) => {
