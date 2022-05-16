@@ -1,0 +1,34 @@
+<script>
+    const getInventory = async () => {
+        document.querySelector('#message').innerHTML = '';
+        document.querySelector('#jsonInventory').innerHTML = '';
+
+        const response = await fetch('/items', {
+            method: "GET",
+            headers: {'Content-Type': 'application/json'}
+        })
+
+        const json = await response.json();
+        document.querySelector('#message').innerHTML = json.message;
+        document.querySelector('#jsonInventory').innerHTML = 
+           json.data.length > 0 ? JSON.stringify((json.data), null, 4) : "No items in inventory.";
+    }
+    const clearMessage = () => {
+        document.querySelector('#message').innerHTML = '';
+        document.querySelector('#jsonInventory').innerHTML = '';
+    }
+</script>
+
+<div style="display: flex; ">
+    <div style="display: flex; flex-direction: column;">
+        <div>
+            <h2>Get Current Inventory</h2>
+            <div style="display: flex; justify-content: center">
+                <input type="submit" value="Read Inventory" style="margin: 0 auto;" onclick="getInventory()">
+                <button onclick="clearMessage()">Clear Response</button>
+            </div>
+        </div>
+        <p id="message"></p>
+        <pre><code id="jsonInventory"></code></pre>
+    </div>
+</div>

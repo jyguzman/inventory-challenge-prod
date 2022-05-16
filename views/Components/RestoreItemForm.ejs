@@ -1,0 +1,42 @@
+<script>
+    const restoreItem = async () =>{
+        document.querySelector('#messageRestore').innerHTML = '';
+        document.querySelector('#jsonRestore').innerHTML ='';
+
+        const id = document.querySelector('#idRestore').value;
+        if (!id) {
+            document.querySelector('#messageRestore').innerHTML = "Please choose an ID.";
+            return;
+        }
+        const response = await fetch(`/deletions/recover-item/${id}`, {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+        })
+        const json = await response.json();
+        document.querySelector('#messageRestore').innerHTML = json.message;
+        if (json.data) {
+            document.querySelector('#jsonRestore').innerHTML = JSON.stringify(json.data, null, 4);
+        }
+    }
+
+    const clearRestore = () => {
+        document.querySelector('#messageRestore').innerHTML = '';
+        document.querySelector('#jsonRestore').innerHTML ='';
+    }
+</script>
+
+<div>
+    <div style="display: flex; flex-direction: column; justify-content: center;">
+        <h2 style="text-align: center;">Restore Removed Item</h2>
+        <table style="display: flex;  justify-content: center;">
+            <tr><th>Item ID</th></tr>
+            <tr><td><input type="number" id="idRestore"/></td></tr>
+        </table>
+        <div>
+            <input type="submit" value="Restore/Undelete" style="margin: 0 auto;" onclick="restoreItem()">
+            <button onclick="clearRestore()">Clear Response</button>
+        </div>
+    </div>
+    <p id="messageRestore"></p>
+    <pre><code id="jsonRestore"></code></pre>
+</div>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Inventory Tracker</title>
+    </head>
+
+    <header>
+        <h2>Inventory Tracking App</h2>
+        <p>
+            You can create, read, edit/update, or delete (with comment) items in 
+            inventory by clicking on the corresponding buttons. You can also 
+            "undelete" deleted items with the "Undelete/Restore" button.
+        </p>
+        <p>
+            For updating or deleting an item, you can look up the item's ID by clicking 
+            "Read Inventory".
+        </p>
+        <p>
+            For "undeleting" an item, look up its ID by clicking "Show Removed Items."
+        </p>
+        <p>
+            You can remove all data by clicking "Reset Database".
+        </p>
+        <p>
+            Clicking "Clear Response" will remove the messages/data received after performing
+            an action.
+        </p>
+        <p>
+            The tests can be run in Replit using the shell (not console). To run the tests,
+            first click "Stop" on Replit, since they cannot be run while using the application.
+            Then in the shell, type the command "npm test" and press "enter". 
+        </p>
+    </header>
+
+    <script>
+        const resetTables = async () => {
+            const response = await fetch('/delete-all', {
+                method: "DELETE",
+                headers: {'Content-Type': 'application/json'}
+            });
+            const json = await response.json();
+            const button = document.createElement('button');
+            button.onclick = () => document.querySelector('#reset').innerHTML = '';
+            button.innerText = "Close"
+            document.querySelector('#reset').innerHTML = json.message;
+            document.querySelector('#reset').appendChild(button);
+        }
+    </script>
+
+    <header>
+        <button onclick="resetTables()">Reset Database</button>
+        <p id="reset"></p>
+    </header>
+
+    <body class="container">
+        <main style="display: flex;">
+            <div style="display: flex; flex-direction: column;">
+                <%- include('../Components/GetInventoryForm') %>
+                <%- include('../Components/CreateForm') %>
+                <%- include('../Components/UpdateForm') %>
+                <%- include('../Components/DeleteForm') %>
+                <%- include('../Components/GetRemovedItemsForm') %>
+                <%- include('../Components/RestoreItemForm') %>
+            </div>
+        </main>
+    </body>
+</html>

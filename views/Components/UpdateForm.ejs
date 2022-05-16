@@ -1,0 +1,73 @@
+<html>
+    <script>
+        const clearUpdate = () => {
+            document.querySelector('#messageUpdate').innerHTML = '';
+            document.querySelector('#jsonUpdate').innerHTML ='';
+        }
+
+        const updateItem = async () =>{
+            document.querySelector('#messageUpdate').innerHTML = '';
+            document.querySelector('#jsonUpdate').innerHTML ='';
+
+            const id = document.querySelector('#idUpdate').value;
+            if (!id) {
+                document.querySelector('#messageUpdate').innerHTML ="Please choose an ID.";
+                return;
+            }
+            const name = document.querySelector('#nameUpdate').value;
+            const quantity = document.querySelector('#quantityUpdate').value;
+            const city = document.querySelector('#cityUpdate').value;
+            const response = await fetch(`/items/update/${id}`, {
+                method: "PUT",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name: name, quantity: quantity, city: city})
+            })
+            const json = await response.json();
+            const button = document.createElement('button');
+            button.onclick = () => clearUpdate();
+            button.innerText = "Close"
+            document.querySelector('#messageUpdate').innerHTML = json.message;
+            if (json.data) { 
+                document.querySelector('#jsonUpdate').innerHTML = JSON.stringify(json.data, null, 4);
+            }
+        }
+    </script>
+    
+    <div id="update-form" style="display: flex;">
+        <div>
+            <h2>Update an Item</h2>
+            <table border=1 cols=2>
+                <tr>
+                    <th>Field Name</th>
+                    <th>Field Value</th>
+                </tr>
+                <tr>
+                    <td>Item ID</td>
+                    <td>
+                        <input type="number" name="id" id="idUpdate">
+                    </td>
+                </tr>
+                <tr>
+                    <td>New Name</td>
+                    <td>
+                        <input type="text" name="name" id="nameUpdate">
+                    </td>
+                </tr>
+                <tr>
+                    <td>New Quantity</td>
+                    <td><input type="number" name="quantity" id="quantityUpdate"></td>
+                </tr>
+                <tr>
+                    <td>New City</td>
+                    <td><input type="text" name="city" id="cityUpdate"></td>
+                </tr>
+            </table>
+            <div style="display: flex;">
+                <input type="submit" value="Update" onclick="updateItem()">
+                <button onClick="clearUpdate()">Clear Response</button>
+            </div>
+            <p id="messageUpdate"></p>
+            <pre><code id="jsonUpdate"></code></pre>
+        </div>
+    </div>
+</html>

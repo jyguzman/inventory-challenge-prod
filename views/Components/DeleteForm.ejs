@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        const removeItem = async () =>{
+            document.querySelector('#messageDelete').innerHTML = '';
+            document.querySelector('#jsonDelete').innerHTML ='';
+
+            const id = document.querySelector('#idDelete').value;
+            if (!id) {
+                document.querySelector('#messageDelete').innerHTML ="Please choose an ID.";
+                return;
+            }
+            const comment = document.querySelector('#commentDelete').value;
+            const response = await fetch(`/items/remove-item/${id}`, {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({comment: comment})
+            })
+            const json = await response.json();
+            document.querySelector('#messageDelete').innerHTML = json.message;
+            if (json.data) {
+                document.querySelector('#jsonDelete').innerHTML = JSON.stringify(json.data, null, 4);
+            }
+        }
+
+        const clearDelete = () => {
+            document.querySelector('#messageDelete').innerHTML = '';
+            document.querySelector('#jsonDelete').innerHTML ='';
+        }
+    </script>
+    
+    <div style="display: flex; flex-direction: column; justify-content: center;">
+        <h2 style="text-align: center;">Remove Item from Inventory</h2>
+        <table style="display: flex;  justify-content: center;">
+            <tr><th>Item ID</th></tr>
+            <tr><td><input type="number" id="idDelete"/></td></tr>
+            <tr><th>Comment</th></tr>
+            <tr><td><textarea name="comment" id="commentDelete"></textarea></td></tr>
+        </table>
+        <div>
+            <input type="submit" value="Delete" style="margin: 0 auto;" onclick="removeItem()">
+            <button onclick="clearDelete()">Clear Response</button>
+        </div>
+        <p id="messageDelete"></p>
+        <pre><code id="jsonDelete"></code></pre>
+    </div>
+</html>
