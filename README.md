@@ -6,10 +6,12 @@ For details on usage and testing, read below.
 
 ## Usage
 
-Visit the Replit at https://replit.com/@jyguzman/inventory-tracking-app, and click "Run" to start up the application.
+Visit the Replit at https://replit.com/@jyguzman/inventory-challenge-prod, and click "Run" to start up the application.
 
-You can view a list of al current items by clicking the 'Read Inventory' button. Each item
-has an ID, name, quantity, and city.
+You can view a list of al current items by clicking the 'Read Inventory' button. Each item has an ID, name, quantity, and city.
+The inventory list also includes a short description of the weather for the city each item is in, with the data being pulled
+from the Open Weather API. There are 5 cities to choose from when
+creating an item.
 
 You can create a new item by providing the listed details: name, quantity, and city.
 
@@ -25,4 +27,4 @@ Finally, the "Reset Database" button empties the database of all items and delet
 
 ## Testing
 
-To run the tests, visit the Replit (https://replit.com/@jyguzman/inventory-tracking-app), go to the shell (not the console), type the command "npm test" in the shell and press "enter".
+To run the tests, visit the Replit (https://replit.com/@jyguzman/inventory-challenge-prod), go to the shell (not the console), type the command "npm test" in the shell and press "enter".
