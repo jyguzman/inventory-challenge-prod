@@ -37,7 +37,10 @@ const resetTables = () => {
 const retrieveInventory = (inventoryDB) => {
     return new Promise((resolve, reject) => (
         inventoryDB.all(`select * from items;`, (err, items) => {
-            if (err) reject('error');
+            if (err) {
+                console.log(err)
+                reject('error');
+            }
             resolve(items);
         })
     ))

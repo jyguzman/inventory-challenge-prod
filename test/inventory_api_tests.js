@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3');
 const inventoryDB = new sqlite3.Database('inventory.db');
+const db_queries = require('../utils/db_queries');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const inventoryAPI = require('../server/inventoryAPI');
@@ -19,7 +20,7 @@ describe('Inventory API', () => {
 
     describe('/POST /items/create', () => {
         it('it should create a new item by ID with the given name, quantity, and city', (done) => {
-            const newItem = { name: 'testItem', quantity: 100, city: "Seattle, WA"};
+            const newItem = { name: 'testItem', quantity: 100, city: "Seattle, US"};
             chai.request(inventoryAPI)
                 .post(`/items/create`)
                 .send(newItem)
@@ -88,7 +89,7 @@ describe('Inventory API', () => {
     describe('/PUT /items/update/:itemId', () => {
         it('it should update a specific item by ID to the updated fields given in a request', (done) => {
             const id = 1;
-            const update = {name: 'updatedTestItem', quantity: 100, city: "Seattle, WA"}
+            const update = {name: 'updatedTestItem', quantity: 100, city: "Seattle, US"}
             chai.request(inventoryAPI)
                 .put(`/items/update/${id}`)
                 .send(update)
