@@ -23,8 +23,9 @@
             const weatherData = await retrieveWeatherData(item.city);
             if (!("data") in weatherData) {
                 item['weather'] = weatherData.message;
+            } else {
+                item['weather'] = weatherData.data;
             }
-            item['weather'] = weatherData.data;
         }
 
         document.querySelector('#message').innerHTML = items.message;
