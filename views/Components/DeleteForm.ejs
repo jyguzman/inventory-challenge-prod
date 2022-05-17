@@ -12,7 +12,7 @@
             }
             const comment = document.querySelector('#commentDelete').value;
             const response = await fetch(`/items/remove-item/${id}`, {
-                method: "POST",
+                method: "PUT",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({comment: comment})
             })

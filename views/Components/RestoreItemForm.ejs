@@ -9,7 +9,7 @@
             return;
         }
         const response = await fetch(`/deletions/recover-item/${id}`, {
-            method: "POST",
+            method: "PUT",
             headers: {'Content-Type': 'application/json'},
         })
         const json = await response.json();

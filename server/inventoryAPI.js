@@ -90,7 +90,7 @@ inventoryAPI.put('/items/update/:id', async (req, res) => {
     sendResponse(res, 200, {message: `Successfully updated item with id ${id}`, data: response});
 })
 
-inventoryAPI.post('/items/remove-item/:id', async (req, res) => {
+inventoryAPI.put('/items/remove-item/:id', async (req, res) => {
     const id = parseFloat(req.params.id);
     if (!isValidNumberInput(id)) {
         sendResponse(res, 400, {message: `Error - item id must be non-nonegative integer.`});
@@ -139,7 +139,7 @@ inventoryAPI.get('/deletions/:itemId', async (req, res) => {
     sendResponse(res, 200, {message: `Successfully retrieved deletion with id ${id}.`, data: response});
 })
 
-inventoryAPI.post('/deletions/recover-item/:id', async (req, res) => {
+inventoryAPI.put('/deletions/recover-item/:id', async (req, res) => {
     const id = parseFloat(req.params.id);
     if (!isValidNumberInput(id)) {
         sendResponse(res, 400, {message: `Error - item id must be non-nonegative integer.`});
