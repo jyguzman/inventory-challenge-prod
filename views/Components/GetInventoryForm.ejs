@@ -11,7 +11,7 @@
         document.querySelector('#message').innerHTML = '';
         document.querySelector('#jsonInventory').innerHTML = '';
 
-        document.querySelector('#message').innerHTML = "Loading...";
+        document.querySelector('#message').innerHTML = "Retrieving inventory...";
     
         let items = await fetch('/items', {
             method: "GET",
