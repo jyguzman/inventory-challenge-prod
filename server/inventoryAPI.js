@@ -56,6 +56,13 @@ inventoryAPI.post('/items/create', async (req, res) => {
         return;
     }
     item.quantity = parseFloat(item.quantity);
+    const item_ = await db_queries.retrieveItemByNameAndCity(inventoryDB, item);
+    if (item_) {
+        const update = await db_queries.updateItem(inventoryDB, item, item_.item_id);
+        sendResponse(res, 200, {message: "Item with given and name and city already exists. Quantity has been updated.",
+            data: item});
+        return;
+    }
     const response = await db_queries.createItem(inventoryDB, item);
     if (response === 'error') {
         sendResponse(res, 500, {message: 'Error inserting item into database.'});

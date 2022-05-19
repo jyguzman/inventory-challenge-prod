@@ -9,6 +9,7 @@
         })
 
         const json = await response.json();
+        
         document.querySelector('#messageRemoved').innerHTML = json.message;
         if (json.data) {
             document.querySelector('#jsonRemoved').innerHTML = 
