@@ -11,6 +11,8 @@
         document.querySelector('#message').innerHTML = '';
         document.querySelector('#jsonInventory').innerHTML = '';
 
+        document.querySelector('#message').innerHTML = "Loading...";
+        
         let items = await fetch('/items', {
             method: "GET",
             headers: {'Content-Type': 'application/json'}

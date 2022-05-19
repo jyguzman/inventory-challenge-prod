@@ -249,5 +249,4 @@ describe('Inventory API', () => {
             })
         })
     })
-
 })
