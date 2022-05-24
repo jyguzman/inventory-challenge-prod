@@ -3,7 +3,7 @@
         document.querySelector('#messageDelete').innerHTML = '';
         document.querySelector('#jsonDelete').innerHTML = '';
 
-        document.querySelector('#message').innerHTML = "Retrieving removed items...";
+        document.querySelector('#messageDelete').innerHTML = "Retrieving removed items...";
         const response = await fetch('/deletions', {
             method: "GET",
             headers: {'Content-Type': 'application/json'}
